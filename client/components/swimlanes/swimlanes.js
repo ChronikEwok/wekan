@@ -3,12 +3,10 @@ const { calculateIndex } = Utils;
 function currentCardIsInThisList(listId, swimlaneId) {
   const currentCard = Cards.findOne(Session.get('currentCard'));
   const currentUser = Meteor.user();
-  if (currentUser.profile.boardView === 'board-view-lists')
-    return currentCard && currentCard.listId === listId;
-  else if (currentUser.profile.boardView === 'board-view-swimlanes')
+  if (currentUser && currentUser.profile.boardView === 'board-view-swimlanes')
     return currentCard && currentCard.listId === listId && currentCard.swimlaneId === swimlaneId;
   else
-    return false;
+    return currentCard && currentCard.listId === listId;
 }
 
 function initSortable(boardComponent, $listsDom) {
